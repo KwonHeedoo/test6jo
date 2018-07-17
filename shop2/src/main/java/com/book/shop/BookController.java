@@ -20,7 +20,7 @@ import VO.WishList;
 
 @Controller
 public class BookController {
-
+//됨?
 	
 	@Autowired
 	SqlSession sqlsession;
