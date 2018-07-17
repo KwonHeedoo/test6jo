@@ -23,7 +23,7 @@
 				<li><a href="gotologin">로그인</a></li>
 			</c:when>
 			<c:when test="${sessionScope.userInfo!=null}">
-		${sessionScope.userInfo.username}님의 로그인을 환영합니다. 
+		${sessionScope.userInfo.username}님의 로그인을 환영합니다.
 		<li><a href="logout">로그아웃</a></li>
 				<li><a href="orderList">주문정보</a></li>
 				<li><a href="wishList">관심상품</a></li>
