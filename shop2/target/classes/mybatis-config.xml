@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+	<!-- Java Class에 대한 alias 지정 -->
+	<typeAliases>
+		<typeAlias type="VO.Book" alias="Book" />
+		<typeAlias type="VO.Shopmember" alias="Shopmember" />
+		<typeAlias type="VO.Sale" alias="Sale" />
+		<typeAlias type="VO.WishList" alias="WishList" />
+	</typeAliases>
+	
+	<!-- Mapper 파일 include -->
+	<mappers>
+		<mapper resource="ShopmemberMapper.xml" />
+		<mapper resource="BookMapper.xml" />
+	</mappers>
+	
+</configuration>

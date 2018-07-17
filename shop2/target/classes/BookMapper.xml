@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DAO.BookMapper">
+	
+	<select id="findAllBooks" resultType="Book">
+		select bookcode, title, price, quantity from book order by bookcode
+	</select>
+		
+	<select id="findBestSeller"  resultType="Book">
+		select b.bookcode, b.title, b.price, sum as saleAll
+		from(select bookcode, sum(purchasecnt) sum from sale group by bookcode
+		) a join book b 
+		on a.bookcode= b.bookcode
+		where rownum= 1
+		order by sum desc
+	</select>
+		
+	<select id="findBook" parameterType="String" resultType="Book">
+		select bookcode, title, price, quantity  from book where bookcode=#{bookcode}
+	</select>
+	
+	<update id="updateQuantity" parameterType="map">
+		update book set quantity =(quantity-#{purchasecnt}) where bookcode=#{bookcode}
+	</update>
+	
+	<insert id="insertSale" parameterType="Sale">
+		insert into sale(	
+			userid
+			,bookcode
+			,purchasecnt
+			,purchasedate
+		)
+		values(
+			#{userid}
+			,#{bookcode}
+			,#{purchasecnt}
+			,sysdate
+		)
+	</insert>
+	
+	<select id="orderList" parameterType="String" resultType="Sale">
+		select b.title, b.price, b1.bookcode, b1.purchasecnt, b1.purchasedate as purchaseDate, (b1.purchasecnt*b.price) purchaseSum
+		from 
+			(select sum(purchasecnt) purchasecnt, bookcode, TO_CHAR(purchasedate,'yyyymmdd') purchasedate 
+			from sale where userid = #{userid} group by TO_CHAR(purchasedate,'yyyymmdd'),bookcode) b1 
+		inner join book b
+			on b1.bookcode= b.bookcode
+		order by b1.bookcode
+		
+	</select>
+
+	<select id="wishList" parameterType="String" resultType="WishList">
+		select distinct w.bookcode, b.title, b.price, w.userid
+		from book b 
+		join wishlist w 
+		on b.bookcode= w.bookcode
+		where userid = #{userid}
+		order by w.bookcode
+	</select>
+	
+	<insert id="insertWishList" parameterType="WishList">
+		insert into wishlist(	
+			userid
+			, bookcode
+		)
+		values(
+			#{userid}
+			, #{bookcode}
+		)	
+	</insert>
+	
+	<delete id="deleteList" parameterType="map">
+		delete from wishlist where bookcode=#{bookcode} and userid=#{userid}
+	
+	</delete>
+
+	
+</mapper>
