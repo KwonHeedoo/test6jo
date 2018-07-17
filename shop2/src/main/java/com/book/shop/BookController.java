@@ -20,7 +20,8 @@ import VO.WishList;
 
 @Controller
 public class BookController {
-
+//건들여 봤음-byㅎㄷ 
+	// 나도 건드려봄 -by ㅈㅅ
 	
 	@Autowired
 	SqlSession sqlsession;
