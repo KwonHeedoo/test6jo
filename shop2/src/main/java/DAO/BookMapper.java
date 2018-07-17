@@ -9,7 +9,7 @@ import VO.Sale;
 import VO.WishList;
 
 public interface BookMapper {
-	
+	//바껴랏!
 	public List<Book> findAllBooks();
 	public Book findBestSeller();
 	public Book findBook(String bookcode);
